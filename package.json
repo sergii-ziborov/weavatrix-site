@@ -1,0 +1,12 @@
+{
+  "name": "weavatrix-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "weavatrix.com landing site — static assets Worker",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test",
+    "deploy": "npx --yes wrangler@4 deploy"
+  }
+}
