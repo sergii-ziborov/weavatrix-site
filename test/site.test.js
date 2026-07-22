@@ -30,7 +30,7 @@ test('site assets stay within the 300-line budget', () => {
 
 test('versioned asset references are current and the hero animation stays deterministic', () => {
     const index = readFileSync(join(REPO_ROOT, 'site/index.html'), 'utf8')
-    assert.ok(index.includes('href="/styles.css?v=0.3.9-hosted-shell-5"'), 'the page loads the Hosted-aligned shell stylesheet without a stale asset')
+    assert.ok(index.includes('href="/styles.css?v=0.3.11-products-1"'), 'the page loads the current product stylesheet without a stale asset')
     assert.ok(index.includes('src="/graph-animation.js?v=0.3.9-hero-graph-6"'), 'the page loads the deterministic hero graph without a stale asset')
     assert.ok(index.includes('src="/hero-field.js?v=0.3.9-hero-field-1"'), 'the page loads the ambient hero field without a stale asset')
     const animation = readFileSync(join(REPO_ROOT, 'site/graph-animation.js'), 'utf8')

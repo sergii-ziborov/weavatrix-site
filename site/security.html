@@ -13,7 +13,7 @@
 <div class="wrap">
   <a class="back" href="/">← weavatrix.com</a>
   <h1>Security</h1>
-  <div class="date">Current public release: 0.3.5</div>
+  <div class="date">Current public Core release: 0.3.11</div>
 
   <div class="callout">
     <p>Suspected vulnerability? Please do not open a public issue. Use
@@ -35,6 +35,14 @@
   product. It performs endpoint capability negotiation and requires an exact preview confirmation
   before sync. The graph-sync contract excludes source bodies, snippets, absolute host paths,
   environment values, credentials and Git remotes; unknown payload fields are discarded.</p>
+
+  <h2>Separate write product</h2>
+  <p>Core has no application-source write path. It stores derived analysis caches outside the
+  repository; explicit architecture approval may create <code>.weavatrix/architecture.json</code>
+  only after preview and token confirmation. The separately installed Apache-2.0
+  <code>weavatrix-refactor</code> package can edit source only when its profile, environment gate
+  and single-use plan token all authorize the exact reviewed plan. It verifies hashes and expected
+  text, applies atomically and creates an external rollback bundle.</p>
 
   <h2>Full policy</h2>
   <p>Process isolation, optional test execution, payload limits and reporting details are documented

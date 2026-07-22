@@ -18,9 +18,8 @@
   <h2>The short version</h2>
   <p>The local Weavatrix MCP is local-first, requires no account, and sends no repository data to us
   by default. Each response includes transient local execution/output/freshness metrics for the caller;
-  Weavatrix does not persist, aggregate or transmit them as telemetry. Network tools are absent from
-  the default profile. Any request
-  is not implemented by the MIT package. Online requests require the separately installed
+  Weavatrix does not persist, aggregate or transmit them as telemetry. No outbound request path is
+  implemented by the MIT package. Online requests require the separately installed
   <code>weavatrix-online</code> product, a configured destination and an explicit tool call.</p>
 
   <h2>What the software processes</h2>
@@ -30,6 +29,13 @@
   <code>.repository-id</code>, <code>graph.json</code>, <code>graph.prev.json</code> and, when used,
   <code>precision.json</code>. Advisory data is cached in <code>~/.weavatrix/advisories.json</code>.
   By default, no repository data leaves your machine.</p>
+
+  <h2>Separate local write product (opt-in)</h2>
+  <p>The MIT Core does not edit application source. The separately installed Apache-2.0
+  <code>weavatrix-refactor</code> package can apply a reviewed local edit only after three explicit
+  gates: the refactor profile, <code>WEAVATRIX_ALLOW_SOURCE_EDITS=1</code> and a single-use plan
+  token. It stores rollback bundles and token state under <code>~/.weavatrix-refactor/</code> and
+  performs no network request.</p>
 
   <p>The built-in TypeScript/JavaScript precision overlay starts package-pinned
   <code>typescript-language-server</code>/<code>tsserver</code> processes locally. Automatic type

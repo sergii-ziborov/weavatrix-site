@@ -1,7 +1,7 @@
 # weavatrix.com
 
-Static landing site for [Weavatrix](https://github.com/sergii-ziborov/weavatrix) — the code-graph
-MCP server. Plain HTML/CSS/JS, no build step, no framework, no dependencies.
+Static landing site for [Weavatrix](https://github.com/sergii-ziborov/weavatrix) Core, Refactor and
+Online. Plain HTML/CSS/JS, no build step, no framework, no dependencies.
 
 Extracted from the main repository (`sergii-ziborov/weavatrix`) so the engine repo stays focused on
 the engine; this repo owns everything the site needs, including its deploy config.
