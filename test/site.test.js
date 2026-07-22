@@ -40,3 +40,19 @@ test('versioned asset references are current and the hero animation stays determ
     assert.doesNotThrow(() => new Function(field), 'the ambient hero field script parses')
     assert.doesNotMatch(field, /Math\.random/, 'the ambient hero field stays deterministic')
 })
+
+test('Refactor is a first-class product surface with the complete tool catalog', () => {
+    const index = readFileSync(join(REPO_ROOT, 'site/index.html'), 'utf8')
+    const refactor = readFileSync(join(REPO_ROOT, 'site/refactor.html'), 'utf8')
+    assert.ok(index.includes('href="/refactor"'), 'the landing page links to the Refactor product page')
+    const methods = [
+        'rename_symbol', 'rename_related_symbols', 'apply_edit_plan', 'rollback_last_apply',
+        'change_signature', 'edit_symbol', 'bulk_replace', 'organize_imports',
+        'move_file', 'move_symbol', 'delete_readiness',
+    ]
+    for (const method of methods) assert.ok(refactor.includes(`<code>${method}</code>`), `${method} is documented`)
+    assert.match(refactor, /Rename is complete, not PLANNED/)
+    assert.match(refactor, /same method/i)
+    assert.match(refactor, /atomic/i)
+    assert.match(refactor, /rollback/i)
+})

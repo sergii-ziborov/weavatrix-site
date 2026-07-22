@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weavatrix Refactor — evidence-backed, transactional refactoring</title>
+<meta name="description" content="Weavatrix Refactor adds 11 evidence-backed MCP tools for semantic rename, coordinated edits, change plans, atomic apply and rollback across JavaScript, TypeScript, SQL, Python, Rust, Go, Java, C# and Solidity.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://weavatrix.com/refactor">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Weavatrix">
+<meta property="og:title" content="Weavatrix Refactor — prove, preview, apply, roll back">
+<meta property="og:description" content="A separately installed Apache-2.0 write layer with 11 MCP tools, byte-exact plans, atomic multi-file writes and durable rollback.">
+<meta property="og:url" content="https://weavatrix.com/refactor">
+<meta property="og:image" content="https://weavatrix.com/og-image-v2.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/styles.css?v=0.3.11-products-1">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="mark" href="/">
+      <svg width="26" height="26" viewBox="0 0 100 100"><circle cx="30" cy="30" r="12" fill="#7c6cff"/><circle cx="72" cy="44" r="9" fill="#40e0c8"/><circle cx="44" cy="74" r="9" fill="#f0f2f8"/><line x1="30" y1="30" x2="72" y2="44" stroke="#7c6cff" stroke-width="4"/><line x1="30" y1="30" x2="44" y2="74" stroke="#40e0c8" stroke-width="4"/></svg>
+      WEAVATRIX <span class="badge">REFACTOR 0.1.0</span>
+    </a>
+    <nav><a href="#workflow">Workflow</a><a href="#tools">11 tools</a><a href="#proof">Proof</a><a href="#languages">Languages</a><a href="https://github.com/sergii-ziborov/weavatrix-refactor">GitHub</a></nav>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <span class="product-kicker">APACHE-2.0 · EXPLICIT WRITE BOUNDARY</span>
+        <h1>Refactor with evidence, <em>not blind text replacement</em>.</h1>
+        <p class="sub">Weavatrix Refactor composes the full read-only Core with 11 tools that identify a change, expose uncertainty, preview against the current tree, apply atomically, refresh the graph and roll back.</p>
+        <a class="cta" href="https://github.com/sergii-ziborov/weavatrix-refactor">View source</a>
+        <a class="cta2" href="#tools">See every method ↓</a>
+      </div>
+      <div class="term" id="install">
+        <div class="term-bar"><i></i><i></i><i></i></div>
+        <pre><span class="c"># preview and analysis remain read-only</span>
+<span class="g">$</span> npx -y weavatrix-refactor &lt;repoRoot&gt;
+
+<span class="c"># enable only the sessions allowed to apply and roll back source edits</span>
+<span class="g">$</span> WEAVATRIX_ALLOW_SOURCE_EDITS=1 npx -y weavatrix-refactor &lt;repoRoot&gt;</pre>
+      </div>
+    </div>
+
+    <section id="workflow">
+      <h2>Rename is complete, not PLANNED</h2>
+      <p class="lead product-lead"><code>rename_symbol</code> and <code>rename_related_symbols</code> own their full two-phase operation. The same method previews first, then applies the exact recomputed plan when called with its single-use confirmation token.</p>
+      <div class="scenario-grid">
+        <article class="scenario"><div class="scenario-head"><small>PHASE 1 · READ-ONLY</small><h3>Preview the exact operation</h3></div><pre><span class="prompt">rename_symbol</span>
+symbol: src/users.ts#getUser@12
+new_name: getCustomer
+
+<span class="result">PREVIEW_OK</span>
+confirmToken: short-lived, plan-bound
+completeness + uncovered references</pre></article>
+        <article class="scenario"><div class="scenario-head"><small>PHASE 2 · ATOMIC WRITE</small><h3>Confirm through the same method</h3></div><pre><span class="prompt">rename_symbol</span>
+same symbol + same new_name
+mode: apply
+confirm_token: &lt;preview token&gt;
+
+<span class="result">APPLIED</span>
+all files written or all restored
+durable rollback bundle retained</pre></article>
+      </div>
+      <p class="license-note"><strong>Coordinated rename:</strong> <code>rename_related_symbols</code> validates up to 50 JS/TS renames together, rejects overlaps, chains, swaps, shadowing and any failed sub-rename, then commits the set as one transaction.</p>
+    </section>
+
+    <section id="tools">
+      <h2>All 11 Refactor methods</h2>
+      <p class="lead product-lead">Four complete write workflows, four applyable plan producers and three structural review tools. Every uncertainty stays visible instead of being converted into a guessed edit.</p>
+      <div class="grid">
+        <div class="card"><h3><span class="dot t"></span><code>rename_symbol</code></h3><p>Cross-language preview/confirm/apply rename using exact JS/TS LSP, schema-aware SQL or strict graph-plus-lexical evidence.</p></div>
+        <div class="card"><h3><span class="dot t"></span><code>rename_related_symbols</code></h3><p>Several JS/TS renames in one language-server session, one conflict check and one atomic multi-file transaction.</p></div>
+        <div class="card"><h3><span class="dot"></span><code>apply_edit_plan</code></h3><p>Generic two-phase executor for hash-bound <code>weavatrix.edit-plan.v1</code> envelopes.</p></div>
+        <div class="card"><h3><span class="dot"></span><code>rollback_last_apply</code></h3><p>Restores the latest pre-apply bundle and refuses to overwrite files that drifted after apply.</p></div>
+        <div class="card"><h3><span class="dot t"></span><code>change_signature</code></h3><p>Adds or removes JS/TS parameters with byte-exact declaration and call-argument surgery; spreads stay uncertain.</p></div>
+        <div class="card"><h3><span class="dot t"></span><code>edit_symbol</code></h3><p>Replaces a symbol body or inserts before/after its parser range, with a JS/TS parse gate.</p></div>
+        <div class="card"><h3><span class="dot"></span><code>bulk_replace</code></h3><p>Two-stage literal or regex replacement over selected, stable occurrence IDs and exact expected counts.</p></div>
+        <div class="card"><h3><span class="dot"></span><code>organize_imports</code></h3><p>Removes only provably unused named JS/TS imports; side-effect, default and namespace imports fail safe.</p></div>
+        <div class="card"><h3><span class="dot t"></span><code>move_file</code></h3><p>Builds a relocate review, import rewrites and architecture projection without pretending file relocation is a text edit.</p></div>
+        <div class="card"><h3><span class="dot t"></span><code>move_symbol</code></h3><p>Projects cycles, boundaries, target dependencies and blast radius before a declaration is moved.</p></div>
+        <div class="card"><h3><span class="dot"></span><code>delete_readiness</code></h3><p>Returns safe, unsafe or UNPROVEN with references and dynamic risks; deletion is never automated.</p></div>
+      </div>
+    </section>
+
+    <section id="proof">
+      <h2>One proof chain from target to rollback</h2>
+      <p class="lead">The write layer does not replace Core analysis. It carries the same graph, provenance and revision through the edit and back into verification.</p>
+      <ol class="proof-flow">
+        <li><b>IDENTIFY</b><span>Stable symbol ID, parser range, callers and blast radius.</span></li>
+        <li><b>PLAN</b><span>Exact before/after text, sha256, provenance and uncertainty.</span></li>
+        <li><b>CONFIRM</b><span>Short-lived token bound to repository and executable plan.</span></li>
+        <li><b>APPLY</b><span>Lock, stale-tree recheck, bottom-up edits, all-or-nothing write.</span></li>
+        <li><b>VERIFY</b><span>Refresh graph; inspect impact, architecture, tests and rollback.</span></li>
+      </ol>
+      <div class="grid">
+        <div class="card"><h3><span class="dot t"></span>Three write gates</h3><p>Install the separate package, select its <code>refactor</code> profile, start with <code>WEAVATRIX_ALLOW_SOURCE_EDITS=1</code>, then present the exact single-use token.</p></div>
+        <div class="card"><h3><span class="dot"></span>Stale-tree protection</h3><p>Under the repository lock, every file hash and exact <code>before</code> string must still match the preview.</p></div>
+        <div class="card"><h3><span class="dot t"></span>Transactional recovery</h3><p>A mid-write failure restores already-written files. The durable rollback bundle remains retryable after an incomplete restore.</p></div>
+        <div class="card"><h3><span class="dot"></span>Path and encoding boundary</h3><p>Traversal, escaping links, NTFS streams, non-UTF-8 files, invalid ranges, overlaps and split surrogate pairs are rejected before writing.</p></div>
+      </div>
+    </section>
+
+    <section id="languages">
+      <h2>Language support says exactly what is proven</h2>
+      <p class="lead product-lead">A backend never claims more certainty than its evidence supports. Graph-plus-lexical rename remains PARTIAL even when every known reference is found.</p>
+      <div class="bench-table-wrap"><table class="bench-table">
+        <thead><tr><th>Surface</th><th>Backend</th><th>Applyable proof</th><th>Completeness</th></tr></thead>
+        <tbody>
+          <tr><td>JavaScript / TypeScript rename</td><td>Bundled language server</td><td>EXACT_LSP</td><td>COMPLETE when boundary is proven</td></tr>
+          <tr><td>SQL tables / fields</td><td>Schema-aware scanner</td><td>EXTRACTED / LEXICAL_EXACT</td><td>Skipped and ambiguous uses reported</td></tr>
+          <tr><td>Python / Rust / Go</td><td>Graph + exact lexical location</td><td>EXTRACTED / LEXICAL_EXACT</td><td>PARTIAL</td></tr>
+          <tr><td>Java / C# / Solidity</td><td>Graph + exact lexical location</td><td>EXTRACTED / LEXICAL_EXACT</td><td>PARTIAL</td></tr>
+          <tr><td>JS/TS signatures and imports</td><td>Parser + graph calls/references</td><td>EXTRACTED / RESOLVED</td><td>Unproven reach stays explicit</td></tr>
+        </tbody>
+      </table></div>
+      <p class="method-note">Honest limits: related multi-symbol rename is JS/TS-only; <code>move_file</code> and <code>move_symbol</code> are review/projection tools; exported deletion cannot receive an automatic clean verdict; tests, typechecking, runtime checks and review remain the release authority.</p>
+    </section>
+  </main>
+
+  <footer><div>© 2026 Sergii Ziborov · <a href="https://github.com/sergii-ziborov/weavatrix-refactor/blob/main/LICENSE">Apache-2.0</a> · <a href="/privacy">Privacy</a> · <a href="/security">Security</a></div><div><a href="/">Core / Refactor / Online</a> · <a href="https://github.com/sergii-ziborov/weavatrix-refactor">GitHub</a></div></footer>
+</div>
+</body>
+</html>
